@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{53D866DC-330A-4E83-B0E6-014EC13D1F02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.Users.API", "src\SocialMedia.Users.API\SocialMedia.Users.API.csproj", "{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{373D9FA5-6B8B-4BDB-8A24-E83BA79FE56B} = {53D866DC-330A-4E83-B0E6-014EC13D1F02}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DFD5821A-472C-4283-8B1D-C62A5BBA831A}
+	EndGlobalSection
+EndGlobal
