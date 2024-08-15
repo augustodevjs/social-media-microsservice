@@ -1,10 +1,12 @@
 ﻿using MediatR;
-using SocialMedia.Users.Application.Models;
+using SocialMedia.Users.Domain.Exceptions;
+using SocialMedia.Users.Application.Exceptions;
 using SocialMedia.Users.Domain.Contracts.Repositories;
+using SocialMedia.Users.Application.Queries.GetUserById;
 
 namespace SocialMedia.Users.Application.Commands.UpdateUser;
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseResult>
+public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, GetUserByIdViewModel>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,22 +15,32 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
         _userRepository = userRepository;
     }
 
-    public async Task<BaseResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<GetUserByIdViewModel> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetById(request.Id);
+        try
+        {
+            var user = await _userRepository.GetById(request.Id);
 
-        user.Update(
-            request.Header, 
-            request.DisplayName, 
-            request.Description, 
-            request.Contact.ToValueObject(),
-            request.Location.ToValueObject()
-       );
+            if (user == null)
+                NotFoundException.ThrowIfNull(user, "User not found");
 
-        _userRepository.Update(user);
+            user!.Update(
+                request.Header,
+                request.DisplayName,
+                request.Description,
+                request.Contact.ToValueObject(),
+                request.Location.ToValueObject()
+           );
 
-        await _userRepository.UnityOfWork.Commit();
+            _userRepository.Update(user);
 
-        return new BaseResult();
+            await _userRepository.UnityOfWork.Commit();
+
+            return new GetUserByIdViewModel(user);
+        }
+        catch (EntityValidationException ex)
+        {
+            throw new EntityValidationException(ex.Message, ex.Errors);
+        }
     }
 }

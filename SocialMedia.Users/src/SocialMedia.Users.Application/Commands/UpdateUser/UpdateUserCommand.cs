@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SocialMedia.Users.Application.Models;
 using SocialMedia.Users.Domain.ValueObjects;
+using SocialMedia.Users.Application.Queries.GetUserById;
 
 namespace SocialMedia.Users.Application.Commands.UpdateUser;
 
-public class UpdateUserCommand : IRequest<BaseResult>
+public class UpdateUserCommand : IRequest<GetUserByIdViewModel>
 {
     public Guid Id { get; set; }
     public string DisplayName { get; set; }

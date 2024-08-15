@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.Users.Application.Commands.DeleteUser;
 using SocialMedia.Users.Application.Commands.SignUpUser;
 using SocialMedia.Users.Application.Commands.UpdateUser;
 using SocialMedia.Users.Application.Queries.GetUserById;
@@ -18,30 +19,47 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    [ProducesResponseType(typeof(GetUserByIdViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetUserByIdQuery(id);
 
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(query, cancellationToken);
 
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post(SignUpUserCommand command)
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var query = new DeleteUserCommand(id);
 
-        return CreatedAtAction(nameof(GetById), new { id = result.Data }, command);
+        await _mediator.Send(query, cancellationToken);
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Post(SignUpUserCommand command, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(command, cancellationToken);
+
+        return NoContent();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(Guid id, UpdateUserCommand command)
+    [ProducesResponseType(typeof(GetUserByIdViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Put(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        command.Id = id;
-
-        var result = await _mediator.Send(command);
-
+        var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
     }
 }

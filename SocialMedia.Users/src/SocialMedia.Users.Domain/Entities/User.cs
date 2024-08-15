@@ -1,6 +1,9 @@
-﻿using SocialMedia.Users.Domain.Enums;
+﻿using FluentValidation.Results;
+using SocialMedia.Users.Domain.Enums;
 using SocialMedia.Users.Domain.Events;
 using SocialMedia.Users.Domain.SeedWork;
+using SocialMedia.Users.Domain.Exceptions;
+using SocialMedia.Users.Domain.Validators;
 using SocialMedia.Users.Domain.ValueObjects;
 
 namespace SocialMedia.Users.Domain.Entities;
@@ -30,7 +33,8 @@ public class User : AggregateRoot
         DisplayName = displayName;
         Status = UserStatus.Active;
 
-        Events.Add(new UserCreated(Email, DisplayName));
+        ValidateAndThrow();
+        AddEvent(new UserCreated(Email, DisplayName));
     }
 
     public void Update(
@@ -42,9 +46,26 @@ public class User : AggregateRoot
     )
     {
         Header = header;
-        DisplayName = displayName;
-        Description = description;
         Contact = contact;
         Location = location;
+        DisplayName = displayName;
+        Description = description;
+
+        ValidateAndThrow();
+    }
+
+    public override bool Validate(out ValidationResult validationResult)
+    {
+        validationResult = new UserValidator().Validate(this);
+        return validationResult.IsValid;
+    }
+
+    private void ValidateAndThrow()
+    {
+        if (!Validate(out var validationResult))
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            throw new EntityValidationException("User is invalid", errors);
+        }
     }
 }

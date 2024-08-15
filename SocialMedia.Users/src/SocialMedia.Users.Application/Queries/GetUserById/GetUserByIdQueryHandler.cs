@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SocialMedia.Users.Application.Models;
+using SocialMedia.Users.Application.Exceptions;
 using SocialMedia.Users.Domain.Contracts.Repositories;
 
 namespace SocialMedia.Users.Application.Queries.GetUserById;
 
-public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseResult<GetUserByIdViewModel>>
+public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, GetUserByIdViewModel>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,12 +13,15 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, BaseRes
         _userRepository = userRepository;
     }
 
-    public async Task<BaseResult<GetUserByIdViewModel>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetUserByIdViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetById(request.Id);
 
-        var viewModel = new GetUserByIdViewModel(user);
+        if (user == null)
+            NotFoundException.ThrowIfNull(user, "User not found.");
 
-        return new BaseResult<GetUserByIdViewModel>(viewModel);
+        var userViewModel = new GetUserByIdViewModel(user);
+
+        return userViewModel;
     }
 }

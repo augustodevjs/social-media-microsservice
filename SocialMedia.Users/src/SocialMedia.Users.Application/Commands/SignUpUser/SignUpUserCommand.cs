@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using SocialMedia.Users.Application.Models;
 using SocialMedia.Users.Domain.Entities;
 
 namespace SocialMedia.Users.Application.Commands.SignUpUser;
 
-public class SignUpUserCommand : IRequest<BaseResult<Guid>>
+public class SignUpUserCommand : IRequest
 {
     public string FullName { get; set; }
     public string DisplayName { get; set; }

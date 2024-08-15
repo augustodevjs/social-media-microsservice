@@ -1,6 +1,6 @@
-﻿using SocialMedia.Users.Domain.Contracts;
+﻿using SocialMedia.Posts.Domain.Contracts;
 
-namespace SocialMedia.Users.Domain.SeedWork;
+namespace SocialMedia.Posts.Domain.SeedWork;
 
 public abstract class AggregateRoot : BaseEntity
 {

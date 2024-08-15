@@ -15,4 +15,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMedia.Posts.Application\SocialMedia.Posts.Application.csproj" />
+  </ItemGroup>
+
 </Project>

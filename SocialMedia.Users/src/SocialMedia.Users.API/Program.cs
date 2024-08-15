@@ -1,5 +1,6 @@
 using SocialMedia.Users.Application;
 using SocialMedia.Users.Infrastructure;
+using SocialMedia.Users.API.Configuration;
 
 namespace SocialMedia.Users.API;
 
@@ -11,20 +12,12 @@ public class Program
 
         builder.Services
             .AddApplication()
+            .AddAndConfigureControllers()
             .AddInfrastructure(builder.Configuration);
-
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
+        app.UseDocumentation();
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();

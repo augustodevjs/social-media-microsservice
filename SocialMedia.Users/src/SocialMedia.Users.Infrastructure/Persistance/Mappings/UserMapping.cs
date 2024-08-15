@@ -24,7 +24,7 @@ public class UserMapping : IEntityTypeConfiguration<User>
         {
             contact.Property(p => p.Website)
                 .HasColumnName("Website");
-            contact.Property(p => p.phoneNumber)
+            contact.Property(p => p.PhoneNumber)
                 .HasColumnName("PhoneNumber");
         });
 
