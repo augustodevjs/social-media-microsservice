@@ -47,9 +47,4 @@ public class User : AggregateRoot
         Contact = contact;
         Location = location;
     }
-
-    public void Deactivate()
-    {
-        Status = UserStatus.Inactive;
-    }
 }
