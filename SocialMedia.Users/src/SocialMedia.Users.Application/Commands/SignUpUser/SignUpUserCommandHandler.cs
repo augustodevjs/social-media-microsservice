@@ -17,7 +17,9 @@ public class SignUpUserCommandHandler : IRequestHandler<SignUpUserCommand, BaseR
     {
         var user = request.ToEntity();
 
-        await _userRepository.AddAsync(user);
+        _userRepository.Create(user);
+
+        await _userRepository.UnityOfWork.Commit();
 
         return new BaseResult<Guid>(user.Id);
     }

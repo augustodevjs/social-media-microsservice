@@ -25,9 +25,8 @@ public class LocationInfoModel
 
 public class ContactInfoModel
 {
-    public string Email { get; set; }
     public string WebSite { get; set; }
     public string PhoneNumber { get; set; }
 
-    public ContactInfo ToValueObject() => new(Email, WebSite, PhoneNumber);
+    public ContactInfo ToValueObject() => new(WebSite, PhoneNumber);
 }

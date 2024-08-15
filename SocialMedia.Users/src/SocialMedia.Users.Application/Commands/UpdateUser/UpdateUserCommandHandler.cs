@@ -15,7 +15,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
 
     public async Task<BaseResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(request.Id);
+        var user = await _userRepository.GetById(request.Id);
 
         user.Update(
             request.Header, 
@@ -25,7 +25,9 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseR
             request.Location.ToValueObject()
        );
 
-        await _userRepository.UpdateAsync(user);
+        _userRepository.Update(user);
+
+        await _userRepository.UnityOfWork.Commit();
 
         return new BaseResult();
     }

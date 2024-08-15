@@ -14,7 +14,6 @@ public class GetUserByIdQuery : IRequest<BaseResult<GetUserByIdViewModel>>
     }
 }
 
-
 public class GetUserByIdViewModel
 {
     public string? Header { get; private set; }

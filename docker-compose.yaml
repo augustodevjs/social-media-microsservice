@@ -1,0 +1,31 @@
+version: "3.8"
+
+networks:
+  social_media_user:
+
+services:
+  social-media-users-api:
+    build:
+      context: ./SocialMedia.Users
+      dockerfile: ./src/SocialMedia.Users.API/Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      - social_media_user
+    environment:
+      - ConnectionStrings__SocialMediaUser=Server=social-media-users-sql-server,1433;Database=SocialMedia__User;User Id=sa;Password=Admin@123;TrustServerCertificate=true
+      - ASPNETCORE_URLS=http://+:80
+
+  social-media-users-sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1434:1433"
+    restart: always
+    networks:
+      - social_media_user
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Admin@123"
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: "Developer"
+      MSSQL_TCP_PORT: 1433

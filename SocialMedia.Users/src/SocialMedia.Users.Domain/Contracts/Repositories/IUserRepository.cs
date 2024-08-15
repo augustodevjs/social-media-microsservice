@@ -2,9 +2,7 @@
 
 namespace SocialMedia.Users.Domain.Contracts.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IRepository<User>
 {
-    Task AddAsync(User user);
-    Task UpdateAsync(User user);
-    Task<User> GetByIdAsync(Guid id);
+
 }
