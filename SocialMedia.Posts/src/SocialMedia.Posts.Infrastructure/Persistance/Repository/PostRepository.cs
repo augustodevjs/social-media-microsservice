@@ -11,4 +11,11 @@ public class PostRepository : Repository<Post>, IPostRepository
     {
         
     }
+
+    public async Task<List<Post>> GetAllPostsByUserId(Guid id)
+    {
+        var posts = Context.Posts.Where(p => p.User.Id == id && !p.IsDeleted).ToList();
+
+        return posts;
+    }
 }

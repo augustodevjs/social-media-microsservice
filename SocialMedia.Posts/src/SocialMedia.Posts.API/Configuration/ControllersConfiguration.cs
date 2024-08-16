@@ -1,10 +1,12 @@
-﻿namespace SocialMedia.Posts.API.Configuration;
+﻿using SocialMedia.Posts.API.Filter;
+
+namespace SocialMedia.Posts.API.Configuration;
 
 public static class ControllersConfiguration
 {
     public static IServiceCollection AddAndConfigureControllers(this IServiceCollection services)
     {
-        //services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilter)));
+        services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilter)));
         services.AddDocumentation();
 
         return services;

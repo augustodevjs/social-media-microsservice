@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.Posts.Application.ViewModels;
 using SocialMedia.Posts.Application.InputModels;
 using SocialMedia.Posts.Application.Contracts.Services;
 
@@ -9,36 +10,40 @@ namespace SocialMedia.Posts.API.Controllers;
 
 public class PostsController : Controller
 {
-    //private readonly IPostService _service;
+    private readonly IPostService _service;
 
-    //public PostsController(IPostService service)
-    //{
-    //    _service = service;
-    //}
+    public PostsController(IPostService service)
+    {
+        _service = service;
+    }
 
-    //[HttpGet]
-    //public async Task<IActionResult> Get(Guid userId)
-    //{
-    //    var result = await _service.GetAll(userId);
+    [HttpGet]
+    [ProducesResponseType(typeof(List<PostItemViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> GetAll(Guid userId)
+    {
+        var result = await _service.GetAll(userId);
 
-    //    return Ok(result);
-    //}
+        return Ok(result);
+    }
 
-    //[HttpPost]
-    //public async Task<IActionResult> Post(Guid userId, [FromBody] CreatePostInputModel model)
-    //{
-    //    model.UserId = userId;
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Post([FromBody] CreatePostInputModel model)
+    {
+        await _service.Create(model);
 
-    //    var result = await _service.Create(model);
+        return NoContent();
+    }
 
-    //    return Ok(result);
-    //}
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _service.Delete(id);
 
-    //[HttpDelete("{id}")]
-    //public async Task<IActionResult> Delete(Guid id)
-    //{
-    //    await _service.Delete(id);
-
-    //    return Ok(result);
-    //}
+        return NoContent();
+    }
 }

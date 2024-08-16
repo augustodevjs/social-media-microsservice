@@ -6,6 +6,6 @@ namespace SocialMedia.Posts.Application.Contracts.Services;
 public interface IPostService
 {
     Task Delete(Guid id);
-    Task<Guid> Create(CreatePostInputModel model);
+    Task Create(CreatePostInputModel model);
     Task<List<PostItemViewModel>> GetAll(Guid userId);
 }

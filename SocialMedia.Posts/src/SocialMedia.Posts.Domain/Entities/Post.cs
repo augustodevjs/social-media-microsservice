@@ -11,6 +11,11 @@ public class Post : AggregateRoot
     public string Content { get; private set; }
     public User User { get; private set; }
 
+    private Post()
+    {
+
+    }
+
     public Post(string content, User user) : base()
     {
         User = user;
