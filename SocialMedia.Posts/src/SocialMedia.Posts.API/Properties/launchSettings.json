@@ -5,7 +5,12 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HOST_NAME": "localhost",
+        "EXCHANGE_NAME": "POST",
+        "ROUTING_KEY": "POST_CREATED",
+        "QUEUE_NAME": "NEWSFEED_POST_CREATED",
+
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5151"

@@ -1,4 +1,5 @@
 ﻿using SocialMedia.Posts.Domain.Exceptions;
+using SocialMedia.Posts.Domain.Contracts;
 using SocialMedia.Posts.Application.ViewModels;
 using SocialMedia.Posts.Application.Exceptions;
 using SocialMedia.Posts.Application.InputModels;
@@ -9,10 +10,12 @@ namespace SocialMedia.Posts.Application.Services;
 
 public class PostService : IPostService
 {
+    private readonly IEventBus _bus;
     private readonly IPostRepository _postRepository;
 
-    public PostService(IPostRepository postRepository)
+    public PostService(IEventBus bus, IPostRepository postRepository)
     {
+        _bus = bus;
         _postRepository = postRepository;
     }
 
@@ -23,6 +26,11 @@ public class PostService : IPostService
             var post = model.ToEntity();
 
             _postRepository.Create(post);
+
+            foreach(var @event in post.Events)
+            {
+                _bus.Publish(@event);
+            }
 
             await _postRepository.UnityOfWork.Commit();
         }

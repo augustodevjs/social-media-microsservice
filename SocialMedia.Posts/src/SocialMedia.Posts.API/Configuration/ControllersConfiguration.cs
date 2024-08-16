@@ -6,8 +6,8 @@ public static class ControllersConfiguration
 {
     public static IServiceCollection AddAndConfigureControllers(this IServiceCollection services)
     {
-        services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilter)));
         services.AddDocumentation();
+        services.AddControllers(options => options.Filters.Add(typeof(ApiExceptionFilter)));
 
         return services;
     }

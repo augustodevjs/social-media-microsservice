@@ -3,6 +3,9 @@ version: "3.8"
 networks:
   social-media-network:
 
+volumes:
+  rabbitmq_data:
+
 services:
   social-media-users-api:
     build:
@@ -41,3 +44,14 @@ services:
       MSSQL_DATA_DIR: /var/opt/mssql/data
       MSSQL_PID: "Developer"
       MSSQL_TCP_PORT: 1433
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - social-media-network

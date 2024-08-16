@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMedia.Posts.Domain.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SocialMedia.Posts.Infrastructure.EventBus;
 using SocialMedia.Posts.Domain.Contracts.Repositories;
 using SocialMedia.Posts.Infrastructure.Persistance.Context;
 using SocialMedia.Posts.Infrastructure.Persistance.Repository;
@@ -14,8 +16,9 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("SocialMediaPost");
 
         services
-            .AddDbContext(connectionString)
-            .AddRepositories();
+            .AddEventBus()
+            .AddRepositories()
+            .AddDbContext(connectionString);
 
         return services;
     }
@@ -31,6 +34,13 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IPostRepository, PostRepository>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddEventBus(this IServiceCollection services)
+    {
+        services.AddScoped<IEventBus, RabbitMQBus>();
 
         return services;
     }

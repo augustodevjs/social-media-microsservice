@@ -1,4 +1,4 @@
-﻿namespace SocialMedia.Posts.Infrastructure.EventBus;
+﻿namespace SocialMedia.Posts.Domain.Contracts;
 
 public interface IEventBus
 {
