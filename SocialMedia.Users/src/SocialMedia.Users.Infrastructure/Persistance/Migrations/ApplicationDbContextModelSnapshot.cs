@@ -69,15 +69,15 @@ namespace SocialMedia.Users.Infrastructure.Persistance.Migrations
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("PhoneNumber");
+
                             b1.Property<string>("Website")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Website");
-
-                            b1.Property<string>("phoneNumber")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("PhoneNumber");
 
                             b1.HasKey("UserId");
 
