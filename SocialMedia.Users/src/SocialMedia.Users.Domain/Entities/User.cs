@@ -1,9 +1,8 @@
 ﻿using FluentValidation.Results;
 using SocialMedia.Users.Domain.Enums;
-using SocialMedia.Users.Domain.Events;
 using SocialMedia.Users.Domain.SeedWork;
-using SocialMedia.Users.Domain.Exceptions;
 using SocialMedia.Users.Domain.Validators;
+using SocialMedia.Users.Domain.Exceptions;
 using SocialMedia.Users.Domain.ValueObjects;
 
 namespace SocialMedia.Users.Domain.Entities;
@@ -34,7 +33,6 @@ public class User : AggregateRoot
         Status = UserStatus.Active;
 
         ValidateAndThrow();
-        AddEvent(new UserCreated(Email, DisplayName));
     }
 
     public void Update(

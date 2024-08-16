@@ -5,7 +5,13 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "EXCHANGE_USER": "EXCHANGE_USER",
+        "ROUTING_KEY_UPDATED_USER": "UPDATED_USER",
+        "ROUTING_KEY_DELETED_USER": "DELETED_USER",
+        "QUEUE_UPDATED_USER": "EVENT_UPDATED_USER",
+        "QUEUE_DELETED_USER": "EVENT_DELETED_USER",
+        "HOST_NAME": "localhost"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5293"

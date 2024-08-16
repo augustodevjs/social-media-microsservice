@@ -2,14 +2,14 @@
 
 namespace SocialMedia.Users.Domain.Events;
 
-public class UserCreated : IEvent
+public class UserUpdated : IEvent
 {
-    public string Email { get; private set; }
+    public Guid Id { get; private set; }
     public string DisplayName { get; private set; }
 
-    public UserCreated(string email, string displayName)
+    public UserUpdated(Guid id, string displayName)
     {
-        Email = email;
+        Id = id;
         DisplayName = displayName;
     }
 }
