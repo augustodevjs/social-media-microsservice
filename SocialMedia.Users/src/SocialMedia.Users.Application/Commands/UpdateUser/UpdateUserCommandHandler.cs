@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SocialMedia.Users.Domain.Events;
 using SocialMedia.Users.Domain.Contracts;
 using SocialMedia.Users.Domain.Exceptions;
 using SocialMedia.Users.Application.Exceptions;
@@ -37,18 +36,6 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, GetUs
            );
 
             _userRepository.Update(user);
-
-            user!.Events.Add(new UserUpdated(user.Id, user.DisplayName));
-
-            foreach (var @event in user.Events)
-            {
-                _bus.Publish(
-                    @event,
-                    Environment.GetEnvironmentVariable("EXCHANGE_USER")!,
-                    Environment.GetEnvironmentVariable("ROUTING_KEY_UPDATED_USER")!,
-                    Environment.GetEnvironmentVariable("QUEUE_UPDATED_USER")!
-                );
-            }
 
             await _userRepository.UnityOfWork.Commit();
 

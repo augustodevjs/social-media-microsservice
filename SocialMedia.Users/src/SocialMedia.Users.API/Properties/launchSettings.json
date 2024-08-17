@@ -7,12 +7,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "EXCHANGE_USER": "EXCHANGE_USER",
-        "ROUTING_KEY_UPDATED_USER": "UPDATED_USER",
         "ROUTING_KEY_DELETED_USER": "DELETED_USER",
-        "ROUTING_KEY_CREATED_USER": "CREATED_USER",
-        "QUEUE_UPDATED_USER": "EVENT_UPDATED_USER",
         "QUEUE_DELETED_USER": "EVENT_DELETED_USER",
-        "QUEUE_CREATED_USER": "EVENT_CREATED_USER",
         "HOST_NAME": "localhost"
       },
       "dotnetRunMessages": true,
