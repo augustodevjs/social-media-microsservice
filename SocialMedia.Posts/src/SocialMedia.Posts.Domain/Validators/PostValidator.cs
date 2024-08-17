@@ -17,6 +17,12 @@ public class PostValidator : AbstractValidator<Post>
             .MaximumLength(280)
             .WithMessage("Content must be at most 280 characters long.");
 
+        RuleFor(post => post.Title)
+            .NotEmpty()
+            .WithMessage("Title is required.")
+            .MaximumLength(50)
+            .WithMessage("Title must be at most 50 characters long.");
+
         RuleFor(post => post.User.Id)
             .NotEmpty()
             .WithMessage("User Id is required.");

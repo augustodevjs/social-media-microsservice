@@ -8,6 +8,7 @@ namespace SocialMedia.Posts.Domain.Entities;
 
 public class Post : AggregateRoot
 {
+    public string Title { get; private set; }
     public string Content { get; private set; }
     public User User { get; private set; }
 
@@ -16,14 +17,15 @@ public class Post : AggregateRoot
 
     }
 
-    public Post(string content, User user) : base()
+    public Post(string content, User user, string title) : base()
     {
         User = user;
+        Title = title;
         Content = content;
 
         ValidateAndThrow();
 
-        AddEvent(new PostCreated(Id, User, Content, CreatedAt));
+        AddEvent(new PostCreated(Id, User, Content, Title, CreatedAt));
     }
 
     public override bool Validate(out ValidationResult validationResult)
