@@ -14,7 +14,9 @@
         "QUEUE_DELETED_USER": "EVENT_DELETED_USER",
         "EXCHANGE_POST": "EXCHANGE_POST",
         "ROUTING_KEY_CREATED_POST": "POST_CREATED",
-        "QUEUE_CREATED_POST": "EVENT_POST_CREATED"
+        "QUEUE_CREATED_POST": "EVENT_POST_CREATED",
+        "ROUTING_KEY_DELETED_POST": "DELETED_POST",
+        "QUEUE_DELETED_POST": "EVENT_POST_DELETED"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5151"

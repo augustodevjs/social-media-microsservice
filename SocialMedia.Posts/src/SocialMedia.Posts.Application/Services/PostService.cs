@@ -54,6 +54,16 @@ public class PostService : IPostService
 
         _postRepository.Delete(post!);
 
+        foreach (var @event in post.Events)
+        {
+            _bus.Publish(
+                @event,
+                Environment.GetEnvironmentVariable("EXCHANGE_POST")!,
+                Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_POST")!,
+                Environment.GetEnvironmentVariable("QUEUE_DELETED_POST")!
+            );
+        }
+
         await _postRepository.UnityOfWork.Commit();
     }
 
