@@ -20,11 +20,5 @@ public class PostValidator : AbstractValidator<Post>
         RuleFor(post => post.User.Id)
             .NotEmpty()
             .WithMessage("User Id is required.");
-
-        RuleFor(post => post.User.DisplayName)
-            .NotEmpty()
-            .WithMessage("Display Name is required.")
-            .MaximumLength(50)
-            .WithMessage("Display Name must be at most 50 characters long.");
     }
 }

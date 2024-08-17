@@ -1,5 +1,5 @@
-﻿using SocialMedia.Posts.Domain.Exceptions;
-using SocialMedia.Posts.Domain.Contracts;
+﻿using SocialMedia.Posts.Domain.Contracts;
+using SocialMedia.Posts.Domain.Exceptions;
 using SocialMedia.Posts.Application.ViewModels;
 using SocialMedia.Posts.Application.Exceptions;
 using SocialMedia.Posts.Application.InputModels;
@@ -27,9 +27,14 @@ public class PostService : IPostService
 
             _postRepository.Create(post);
 
-            foreach(var @event in post.Events)
+            foreach (var @event in post.Events)
             {
-                _bus.Publish(@event);
+                _bus.Publish(
+                    @event,
+                    Environment.GetEnvironmentVariable("EXCHANGE_POST")!,
+                    Environment.GetEnvironmentVariable("ROUTING_KEY_CREATED_POST")!,
+                    Environment.GetEnvironmentVariable("QUEUE_CREATED_POST")!
+                );
             }
 
             await _postRepository.UnityOfWork.Commit();

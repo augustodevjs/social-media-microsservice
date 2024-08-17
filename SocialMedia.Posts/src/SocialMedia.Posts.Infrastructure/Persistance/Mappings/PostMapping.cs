@@ -19,11 +19,6 @@ public class PostMapping : IEntityTypeConfiguration<Post>
             user.Property(u => u.Id)
                 .IsRequired()
                 .HasColumnName("UserId");
-
-            user.Property(u => u.DisplayName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("UserDisplayName");
         });
 
         builder.Ignore(p => p.Events);

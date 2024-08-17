@@ -3,11 +3,9 @@
 public class User
 {
     public Guid Id { get; private set; }
-    public string DisplayName { get; private set; }
 
-    public User(Guid id, string displayName)
+    public User(Guid id)
     {
         Id = id;
-        DisplayName = displayName;
     }
 }

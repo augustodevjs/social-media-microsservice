@@ -25,8 +25,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDbContext(this IServiceCollection services, string? connectionString)
     {
-        services
-            .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
         return services;
     }

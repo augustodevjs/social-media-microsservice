@@ -8,16 +8,10 @@ namespace SocialMedia.Posts.Infrastructure.EventBus
     public class RabbitMQBus : IEventBus
     {
         private readonly IModel _channel;
-        private readonly string _exchangeName;
-        private readonly string _routingKey;
 
         public RabbitMQBus()
         {
             var hostName = GetEnvironmentVariable("HOST_NAME");
-            var queueName = GetEnvironmentVariable("QUEUE_NAME");
-
-            _exchangeName = GetEnvironmentVariable("EXCHANGE_NAME");
-            _routingKey = GetEnvironmentVariable("ROUTING_KEY");
 
             var factory = new ConnectionFactory
             {
@@ -26,18 +20,18 @@ namespace SocialMedia.Posts.Infrastructure.EventBus
 
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
-
-            _channel.ExchangeDeclare(_exchangeName, "direct", durable: true, autoDelete: false);
-            _channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false);
-            _channel.QueueBind(queueName, _exchangeName, _routingKey);
         }
 
-        public void Publish<T>(T @event)
+        public void Publish<T>(T @event, string exchangeName, string routingKey, string queueName)
         {
+            _channel.ExchangeDeclare(exchangeName, "direct", durable: true, autoDelete: false);
+            _channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false);
+            _channel.QueueBind(queueName, exchangeName, routingKey);
+
             var json = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(json);
 
-            _channel.BasicPublish(_exchangeName, _routingKey, null, body);
+            _channel.BasicPublish(exchangeName, routingKey, null, body);
         }
 
         private static string GetEnvironmentVariable(string variableName)
