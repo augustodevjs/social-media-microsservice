@@ -15,21 +15,44 @@ services:
       - "5000:80"
     networks:
       - social-media-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     environment:
-      - ConnectionStrings__SocialMediaPost=Server=social-media-sql-server,1433;Database=SocialMedia__Post;User Id=sa;Password=Admin@123;TrustServerCertificate=true
+      - ConnectionStrings__SocialMediaUser=Server=social-media-sql-server,1433;Database=SocialMedia__User;User Id=sa;Password=Admin@123;TrustServerCertificate=true
       - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - EXCHANGE_USER=EXCHANGE_USER
+      - ROUTING_KEY_UPDATED_USER=UPDATED_USER
+      - ROUTING_KEY_DELETED_USER=DELETED_USER
+      - QUEUE_UPDATED_USER=EVENT_UPDATED_USER
+      - QUEUE_DELETED_USER=EVENT_DELETED_USER
+      - HOST_NAME=rabbitmq
 
   social-media-posts-api:
     build:
       context: ./SocialMedia.Posts
       dockerfile: ./src/SocialMedia.Posts.API/Dockerfile
     ports:
-      - "50001:80"
+      - "5001:80"
     networks:
       - social-media-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     environment:
-      - ConnectionStrings__SocialMediaUser=Server=social-media-sql-server,1433;Database=SocialMedia__User;User Id=sa;Password=Admin@123;TrustServerCertificate=true
+      - ConnectionStrings__SocialMediaPost=Server=social-media-sql-server,1433;Database=SocialMedia__Post;User Id=sa;Password=Admin@123;TrustServerCertificate=true
       - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - HOST_NAME=rabbitmq
+      - EXCHANGE_USER=EXCHANGE_USER
+      - ROUTING_KEY_UPDATED_USER=UPDATED_USER
+      - ROUTING_KEY_DELETED_USER=DELETED_USER
+      - QUEUE_UPDATED_USER=EVENT_UPDATED_USER
+      - QUEUE_DELETED_USER=EVENT_DELETED_USER
+      - EXCHANGE_POST=EXCHANGE_POST
+      - ROUTING_KEY_CREATED_POST=POST_CREATED
+      - QUEUE_CREATED_POST=EVENT_POST_CREATED
 
   social-media-sql-server:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -55,3 +78,9 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - social-media-network
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
