@@ -1,4 +1,5 @@
 ﻿using SocialMedia.Posts.Application.Services;
+using SocialMedia.Posts.Application.Consumers;
 using Microsoft.Extensions.DependencyInjection;
 using SocialMedia.Posts.Application.Contracts.Services;
 
@@ -8,7 +9,9 @@ public static class DependecyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddServices();
+        services
+            .AddServices()
+            .AddHostedService();
 
         return services;
     }
@@ -18,5 +21,10 @@ public static class DependecyInjection
         services.AddScoped<IPostService, PostService>();
 
         return services;
+    }
+
+    private static void AddHostedService(this IServiceCollection services)
+    {
+        services.AddHostedService<UserDeletedConsumer>();
     }
 }

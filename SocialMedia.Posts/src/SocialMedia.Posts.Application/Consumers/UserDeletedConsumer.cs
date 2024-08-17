@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using RabbitMQ.Client.Events;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using SocialMedia.Posts.Application.Contracts.Events;
+using SocialMedia.Posts.Application.ViewModels;
 using SocialMedia.Posts.Domain.Contracts.Repositories;
 
 namespace SocialMedia.Posts.Application.Consumers;
@@ -47,7 +47,7 @@ public class UserDeletedConsumer : BackgroundService
             var contentArray = eventArgs.Body.ToArray();
             var json = Encoding.UTF8.GetString(contentArray);
 
-            var @event = JsonConvert.DeserializeObject<UserDeleted>(json);
+            var @event = JsonConvert.DeserializeObject<UserDeletedEventViewModel>(json);
 
             await DeletePost(@event!);
 
@@ -59,7 +59,7 @@ public class UserDeletedConsumer : BackgroundService
         return Task.CompletedTask;
     }
 
-    private async Task DeletePost(UserDeleted @event)
+    private async Task DeletePost(UserDeletedEventViewModel @event)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
