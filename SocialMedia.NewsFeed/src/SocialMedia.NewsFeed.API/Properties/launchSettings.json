@@ -1,0 +1,61 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HOST_NAME": "localhost",
+        "EXCHANGE_USER": "EXCHANGE_USER",
+        "ROUTING_KEY_DELETED_USER": "DELETED_USER",
+        "QUEUE_DELETED_USER": "EVENT_DELETED_USER",
+        "EXCHANGE_POST": "EXCHANGE_POST",
+        "ROUTING_KEY_CREATED_POST": "POST_CREATED",
+        "QUEUE_CREATED_POST": "EVENT_POST_CREATED",
+        "ROUTING_KEY_DELETED_POST": "DELETED_POST",
+        "QUEUE_DELETED_POST": "EVENT_POST_DELETED"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5209"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7215;http://localhost:5209"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:61298",
+      "sslPort": 44323
+    }
+  }
+}

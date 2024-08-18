@@ -22,12 +22,10 @@ services:
       - ConnectionStrings__SocialMediaUser=Server=social-media-sql-server,1433;Database=SocialMedia__User;User Id=sa;Password=Admin@123;TrustServerCertificate=true
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Development
-      - EXCHANGE_USER=EXCHANGE_USER
-      - ROUTING_KEY_UPDATED_USER=UPDATED_USER
-      - ROUTING_KEY_DELETED_USER=DELETED_USER
-      - QUEUE_UPDATED_USER=EVENT_UPDATED_USER
-      - QUEUE_DELETED_USER=EVENT_DELETED_USER
       - HOST_NAME=rabbitmq
+      - EXCHANGE_USER=EXCHANGE_USER
+      - ROUTING_KEY_DELETED_USER=DELETED_USER
+      - QUEUE_DELETED_USER=EVENT_DELETED_USER
 
   social-media-posts-api:
     build:
@@ -46,13 +44,38 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - HOST_NAME=rabbitmq
       - EXCHANGE_USER=EXCHANGE_USER
-      - ROUTING_KEY_UPDATED_USER=UPDATED_USER
       - ROUTING_KEY_DELETED_USER=DELETED_USER
-      - QUEUE_UPDATED_USER=EVENT_UPDATED_USER
       - QUEUE_DELETED_USER=EVENT_DELETED_USER
       - EXCHANGE_POST=EXCHANGE_POST
       - ROUTING_KEY_CREATED_POST=POST_CREATED
       - QUEUE_CREATED_POST=EVENT_POST_CREATED
+      - ROUTING_KEY_DELETED_POST=DELETED_POST
+      - QUEUE_DELETED_POST=EVENT_POST_DELETED
+
+  social-media-news-feed-api:
+    build:
+      context: ./SocialMedia.NewsFeed
+      dockerfile: ./src/SocialMedia.NewsFeed.API/Dockerfile
+    ports:
+      - "5002:80"
+    networks:
+      - social-media-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__SocialMediaNewsFeed=Server=social-media-sql-server,1433;Database=SocialMedia__News;User Id=sa;Password=Admin@123;TrustServerCertificate=true
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - HOST_NAME=rabbitmq
+      - EXCHANGE_USER=EXCHANGE_USER
+      - ROUTING_KEY_DELETED_USER=DELETED_USER
+      - QUEUE_DELETED_USER=EVENT_DELETED_USER
+      - EXCHANGE_POST=EXCHANGE_POST
+      - ROUTING_KEY_CREATED_POST=POST_CREATED
+      - QUEUE_CREATED_POST=EVENT_POST_CREATED
+      - ROUTING_KEY_DELETED_POST=DELETED_POST
+      - QUEUE_DELETED_POST=EVENT_POST_DELETED
 
   social-media-sql-server:
     image: mcr.microsoft.com/mssql/server:2022-latest
