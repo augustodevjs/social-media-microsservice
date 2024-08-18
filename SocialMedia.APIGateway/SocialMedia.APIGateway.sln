@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.APIGateway", "SocialMedia.APIGateway\SocialMedia.APIGateway.csproj", "{D5CDF231-677D-456C-A48C-93084D48B71B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5CDF231-677D-456C-A48C-93084D48B71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CDF231-677D-456C-A48C-93084D48B71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CDF231-677D-456C-A48C-93084D48B71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CDF231-677D-456C-A48C-93084D48B71B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F5AD407-BF9F-42D5-AAE4-26E8D775D078}
+	EndGlobalSection
+EndGlobal
