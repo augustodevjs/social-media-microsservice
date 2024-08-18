@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialMedia.NewsFeed.Infrastructure.Persistance.Context;
 
@@ -11,9 +12,11 @@ using SocialMedia.NewsFeed.Infrastructure.Persistance.Context;
 namespace SocialMedia.NewsFeed.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240818165309_updatePostEntityNewsFeed")]
+    partial class updatePostEntityNewsFeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,12 +42,12 @@ namespace SocialMedia.NewsFeed.Infrastructure.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserNewsfeedId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PostId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserNewsfeedId");
 
                     b.ToTable("Posts");
                 });
@@ -73,9 +76,8 @@ namespace SocialMedia.NewsFeed.Infrastructure.Persistance.Migrations
                 {
                     b.HasOne("SocialMedia.NewsFeed.Domain.Entities.UserNewsfeed", null)
                         .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserNewsfeedId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SocialMedia.NewsFeed.Domain.Entities.UserNewsfeed", b =>

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SocialMedia.Users.Domain.Contracts;
 using SocialMedia.Users.Domain.Exceptions;
 using SocialMedia.Users.Application.Exceptions;
 using SocialMedia.Users.Domain.Contracts.Repositories;
@@ -9,12 +8,10 @@ namespace SocialMedia.Users.Application.Commands.UpdateUser;
 
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, GetUserByIdViewModel>
 {
-    private readonly IEventBus _bus;
     private readonly IUserRepository _userRepository;
 
-    public UpdateUserCommandHandler(IEventBus bus, IUserRepository userRepository)
+    public UpdateUserCommandHandler(IUserRepository userRepository)
     {
-        _bus = bus;
         _userRepository = userRepository;
     }
 

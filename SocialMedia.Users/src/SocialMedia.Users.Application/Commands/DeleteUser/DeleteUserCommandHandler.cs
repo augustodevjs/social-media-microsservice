@@ -33,8 +33,15 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
             _bus.Publish(
                 @event, 
                 Environment.GetEnvironmentVariable("EXCHANGE_USER")!,
-                Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER")!,
-                Environment.GetEnvironmentVariable("QUEUE_DELETED_USER")!
+                Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER_POST")!,
+                Environment.GetEnvironmentVariable("QUEUE_DELETED_USER_POST")!
+            );
+
+            _bus.Publish(
+                @event,
+                Environment.GetEnvironmentVariable("EXCHANGE_USER")!,
+                Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER_NEWSFEED")!,
+                Environment.GetEnvironmentVariable("QUEUE_DELETED_USER_NEWSFEED")!
             );
         }
 

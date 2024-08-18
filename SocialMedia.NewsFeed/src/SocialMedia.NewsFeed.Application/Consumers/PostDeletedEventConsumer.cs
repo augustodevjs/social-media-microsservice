@@ -64,7 +64,7 @@ public class PostDeletedEventConsumer : BackgroundService
         using (var scope = _serviceProvider.CreateScope())
         {
             var repository = scope.ServiceProvider
-                .GetRequiredService<IUserNewsFeedRepository>();
+                .GetRequiredService<IPostRepository>();
 
             var feed = await repository.GetById(viewModel.Id);
 

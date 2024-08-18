@@ -19,10 +19,10 @@ public class UserDeletedEventConsumer : BackgroundService
     {
         _serviceProvider = serviceProvider;
 
-        _queue = Environment.GetEnvironmentVariable("QUEUE_DELETED_USER")!;
+        _queue = Environment.GetEnvironmentVariable("QUEUE_DELETED_USER_NEWSFEED")!;
 
         var exchange = Environment.GetEnvironmentVariable("EXCHANGE_USER");
-        var routingKey = Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER");
+        var routingKey = Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER_NEWSFEED");
 
         var connectionFactory = new ConnectionFactory
         {
@@ -68,7 +68,7 @@ public class UserDeletedEventConsumer : BackgroundService
 
             var feeds = await repository.GetNewsFeedByUserId(viewModel.Id);
 
-            if (feeds == null) return;
+            if (feeds.Count == 0) return;
 
             repository.DeleteNewsFeedByUserId(feeds);
 

@@ -64,22 +64,33 @@ public class PostCreatedEventConsumer : BackgroundService
     {
         using (var scope = _serviceProvider.CreateScope())
         {
-            var repository = scope.ServiceProvider
-                .GetRequiredService<IUserNewsFeedRepository>();
+            var repositoryPost = scope.ServiceProvider.GetRequiredService<IPostRepository>();
+            var repositoryNewsFeed = scope.ServiceProvider.GetRequiredService<IUserNewsFeedRepository>();
 
-            var getPost = await repository.GetById(viewModel.Id);
+            var getPost = await repositoryPost.GetById(viewModel.Id);
 
             if (getPost != null) return;
 
-            var post = new Post(viewModel.Id, viewModel.Content, viewModel.Title, viewModel.PublishedAt);
+            var post = new Post(viewModel.User.Id, viewModel.Id, viewModel.Content, viewModel.Title, viewModel.PublishedAt);
 
-            var posts = new List<Post> { post };
+            var userFeed = await repositoryNewsFeed.FirstOrDefault(x => x.UserId == viewModel.User.Id);
 
-            var feed = new UserNewsfeed(viewModel.User.Id, posts);
+            if (userFeed == null)
+            {
+                var posts = new List<Post> { post };
 
-            repository.Create(feed);
+                userFeed = new UserNewsfeed(viewModel.User.Id, posts);
 
-            await repository.UnityOfWork.Commit();
+                repositoryNewsFeed.Create(userFeed);
+
+                await repositoryNewsFeed.UnityOfWork.Commit();
+            }
+            else
+            {
+                repositoryPost.Create(post);
+
+                await repositoryPost.UnityOfWork.Commit();
+            }
         }
     }
 }

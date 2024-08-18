@@ -9,13 +9,7 @@ public class UserNewsfeedMapping : IEntityTypeConfiguration<UserNewsfeed>
     public void Configure(EntityTypeBuilder<UserNewsfeed> builder)
     {
         builder.HasKey(uf => uf.UserId);
-
-        builder
-            .HasMany(uf => uf.Posts)
-            .WithOne()
-            .HasForeignKey("UserNewsfeedId")
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Ignore(p => p.Events);
+        builder.Property(uf => uf.UserId).IsRequired();
+        builder.Ignore(uf => uf.Events);
     }
 }

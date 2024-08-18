@@ -5,6 +5,8 @@ using SocialMedia.Posts.Application.Exceptions;
 using SocialMedia.Posts.Application.InputModels;
 using SocialMedia.Posts.Domain.Contracts.Repositories;
 using SocialMedia.Posts.Application.Contracts.Services;
+using SocialMedia.Posts.Domain.Entities;
+using SocialMedia.Posts.Domain.Events;
 
 namespace SocialMedia.Posts.Application.Services;
 
@@ -53,6 +55,8 @@ public class PostService : IPostService
             NotFoundException.ThrowIfNull(post, "Post not found.");
 
         _postRepository.Delete(post!);
+
+        post!.Events.Add(new PostDeleted(id));
 
         foreach (var @event in post.Events)
         {

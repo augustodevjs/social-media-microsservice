@@ -19,10 +19,10 @@ public class UserDeletedConsumer : BackgroundService
     {
         _serviceProvider = serviceProvider;
 
-        _queue = Environment.GetEnvironmentVariable("QUEUE_DELETED_USER")!;
+        _queue = Environment.GetEnvironmentVariable("QUEUE_DELETED_USER_POST")!;
 
         var exchange = Environment.GetEnvironmentVariable("EXCHANGE_USER");
-        var routingKey = Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER");
+        var routingKey = Environment.GetEnvironmentVariable("ROUTING_KEY_DELETED_USER_POST");
 
         var connectionFactory = new ConnectionFactory
         {
