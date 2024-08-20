@@ -1,0 +1,115 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/users/{everything}",
+      "DownstreamPathTemplate": "/users/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5293
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "20s",
+        "Limit": 3
+      },
+      "SwaggerKey": "User_API_Swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/api/users/{userId}/posts/{id}",
+      "DownstreamPathTemplate": "/api/users/{userId}/posts/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5151
+        }
+      ],
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "20s",
+        "Limit": 3
+      },
+      "SwaggerKey": "Post_API_Swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/api/users/{userId}/posts",
+      "DownstreamPathTemplate": "/api/users/{userId}/posts",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5151
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "20s",
+        "Limit": 3
+      },
+      "SwaggerKey": "Post_API_Swagger"
+    },
+    {
+      "UpstreamPathTemplate": "/newsfeed/{everything}",
+      "DownstreamPathTemplate": "/newsfeed/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5209
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "20s",
+        "Limit": 3
+      },
+      "SwaggerKey": "NewsFeed_API_Swagger"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "User_API_Swagger",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "http://localhost:5293/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Post_API_Swagger",
+      "Config": [
+        {
+          "Name": "Post API",
+          "Version": "v1",
+          "Url": "http://localhost:5151/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "NewsFeed_API_Swagger",
+      "Config": [
+        {
+          "Name": "NewsFeed API",
+          "Version": "v1",
+          "Url": "http://localhost:5209/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost"
+  }
+}
